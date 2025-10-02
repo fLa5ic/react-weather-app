@@ -61,3 +61,33 @@ body {
 
   margin: 6.4rem 0;
 }
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  margin-top: 4.8rem;
+
+  &-left {
+    width: 80rem;
+    // border: 1px solid red;
+
+    &__top {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  &-right {
+    padding: 2.4rem;
+    gap: 1.6rem;
+
+    width: 38.4rem;
+    // height: 693px;
+
+    background: $bgComponents;
+    border-radius: 2rem;
+
+  }
+}

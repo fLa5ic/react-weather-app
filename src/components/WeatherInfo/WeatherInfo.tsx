@@ -1,0 +1,21 @@
+import React from 'react';
+
+import sunnySvg from '../../assets/images/icon-sunny.webp';
+
+import styles from './WeatherInfo.module.scss';
+
+const WeatherInfo: React.FC = () => {
+   return (
+      <div className={styles.weatherInfo}>
+         <div className={styles.cityAndDate}>
+            <div className={styles.title}>Berlin, Germany</div>
+            <div className={styles.date}>Tuesday, Aug 5, 2025</div>
+         </div>
+         <div className={styles.temperature}>
+            <img src={sunnySvg} width={120} alt="Sunny" />
+            20°
+         </div>
+      </div>
+   );
+};
+export default WeatherInfo;
