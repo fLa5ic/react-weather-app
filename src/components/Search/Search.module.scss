@@ -1,0 +1,134 @@
+@import '../../scss/variables';
+
+.searchWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  // position: relative;
+
+  .search {
+    position: relative;
+
+    & img {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+
+      padding-left: 2.4rem;
+      padding-right: 1.6rem;
+    }
+
+    & input {
+      padding: 1.6rem 2.4rem;
+      gap: 1.6rem;
+
+      width: 52.6rem;
+      height: 5.6rem;
+
+      padding-left: 6rem;
+      margin-right: 1.6rem;
+
+      background: $bgHourlyComp;
+      border-radius: 1.2rem;
+      border: none;
+
+      font-family: 'DM Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 2rem;
+      line-height: 2.4rem;
+
+      color: $subMain;
+
+      &::placeholder {
+        font-family: 'DM Sans';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 1.6rem;
+        line-height: 2.4rem;
+
+        color: $subMain;
+
+        margin-left: 2rem;
+      }
+    }
+
+    .searchBtn {
+      padding: 1.6rem 2.4rem;
+      gap: 1.6rem;
+
+      width: 11.4rem;
+      height: 5.6rem;
+
+      background: $bgSearchBtn;
+      border-radius: 1.2rem;
+      border: none;
+
+      font-family: 'DM Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 2.4rem;
+      color: $main;
+      cursor: pointer;
+
+      &:focus {
+        box-shadow: 0 0 0 .3rem $bgColor, 0 0 0 .5rem $main;
+      }
+    }
+
+    .dropDown {
+      display: flex;
+      flex-direction: column;
+
+      padding: .8rem;
+      gap: .4rem;
+      margin-top: 1rem;
+
+      position: absolute;
+      width: 526px;
+      height: 184px;
+      left: 0;
+
+      background: $bgComponents;
+      border: .1rem solid $bgHourlyComp;
+      border-radius: 1.2rem
+    }
+
+    .dropDownItem {
+      display: flex;
+      align-items: center;
+
+      cursor: pointer;
+
+      padding: 1rem .8rem;
+      gap: 1rem;
+
+      width: 51rem;
+      height: 3.9rem;
+
+      background: transparent;
+      border: .1rem solid transparent;
+      border-radius: .8rem;
+
+      width: 100%;
+
+      font-family: 'DM Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 1.6rem;
+      line-height: 1.9rem;
+
+      color: $main;
+
+      transition: all .25s ease-out;
+
+      &:hover {
+        background: $bgHourlyComp;
+        border: .1rem solid #3C3B5E;
+      }
+    }
+  }
+}
