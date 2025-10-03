@@ -1,0 +1,57 @@
+@import '../../scss/variables';
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.6rem 1rem;
+  gap: 1.6rem;
+
+  width: 13.2%;
+  // height: 165px;
+
+  background: $bgComponents;
+  border: .1rem solid #3C3B5E;
+  border-radius: 1.2rem;
+
+  .day {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.8rem;
+    line-height: 2.2rem;
+
+    color: $main;
+  }
+
+  & img {
+    display: block;
+    width: 6rem;
+  }
+
+  .temperature {
+    display: flex;
+    align-items: center;
+    gap: 3.3rem;
+
+    .maxTemp {
+      font-family: 'DM Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 1.6rem;
+      line-height: 1.9rem;
+
+      color: $main;
+    }
+
+    .minTemp {
+      font-family: 'DM Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 1.6rem;
+      line-height: 1.9rem;
+
+      color: $subMain
+    }
+  }
+}

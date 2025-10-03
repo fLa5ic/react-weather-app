@@ -45,6 +45,9 @@ body {
   height: 100%;
 
   background: $bgColor;
+}
+
+.wrapper {
 
   padding-top: 4.8rem;
   padding-bottom: 8rem;
@@ -76,6 +79,26 @@ body {
     &__top {
       display: flex;
       flex-direction: column;
+      margin-bottom: 4.8rem;
+    }
+
+    &__bottom {
+      &-dayilyForecast {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: wrap;
+      }
+
+      &-title {
+        font-family: 'DM Sans';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 2rem;
+        line-height: 2.4rem;
+        color: $main;
+
+        margin-bottom: 2rem;
+      }
     }
   }
 
