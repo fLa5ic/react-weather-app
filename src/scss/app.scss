@@ -9,8 +9,8 @@
   padding-right: 15px;
   margin: 0 auto;
 
-  border-right: 1px solid green;
-  border-left: 1px solid green;
+  // border-right: 1px solid green;
+  // border-left: 1px solid green;
 }
 
 *,
@@ -112,5 +112,20 @@ body {
     background: $bgComponents;
     border-radius: 2rem;
 
+    &__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      &-title {
+        font-family: 'DM Sans';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 2rem;
+        line-height: 2.4rem;
+
+        color: $main;
+      }
+    }
   }
 }

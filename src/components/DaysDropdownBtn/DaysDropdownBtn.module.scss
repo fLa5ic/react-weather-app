@@ -1,0 +1,81 @@
+@import "../../scss/variables";
+
+.daysDropdownBtnWrapper {
+  position: relative;
+
+  .daysDropdownBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .8rem 1.6rem;
+    gap: 1.2rem;
+    height: 3.7rem;
+
+    background: #3C3B5E;
+    border-radius: .8rem;
+    border: none;
+
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.6rem;
+    line-height: 2.1rem;
+    text-align: center;
+    cursor: pointer;
+
+    color: $main;
+
+    &:focus {
+      box-shadow: 0 0 0 .3rem $bgColor, 0 0 0 .5rem $main;
+    }
+  }
+
+  .daysDropdownPopup {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: .8rem;
+    gap: .4rem;
+
+    position: absolute;
+    width: 21.4rem;
+    right: 0;
+    top: 4.7rem;
+
+    background: $bgComponents;
+    border: .1rem solid #3C3B5E;
+    box-shadow: 0 .8rem 1.6rem rgba(2, 1, 44, 0.32);
+    border-radius: 1.2rem;
+
+    & button {
+      font-family: 'DM Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 1.6rem;
+      text-align: left;
+      line-height: 1.9rem;
+      cursor: pointer;
+      color: $main;
+
+      padding: 1rem .8rem;
+      gap: 1rem;
+
+      width: 19.8rem;
+      height: 3.9rem;
+
+      background: transparent;
+      border-radius: .8rem;
+      border: none;
+
+      transition: background .25s ease-out;
+
+      &:hover {
+        background: $bgHourlyComp;
+      }
+
+      &.active {
+        background: $bgHourlyComp;
+      }
+    }
+  }
+}
