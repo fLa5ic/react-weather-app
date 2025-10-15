@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-import { fetchWeatherApi } from 'openmeteo';
+// import { fetchWeatherApi } from 'openmeteo';
 
 import Header from './components/Header/Header';
 import Search from './components/Search/Search';
@@ -14,6 +14,24 @@ import HourlyForecastItem from './components/HourlyForecastItem/HourlyForecastIt
 import './scss/app.scss';
 
 function App() {
+   const [weatherData, setWeatherData] = React.useState<any>(null);
+
+   React.useEffect(() => {
+      fetch(
+         'https://api.open-meteo.com/v1/forecast?latitude=52.5244&longitude=13.4105&daily=temperature_2m_max,temperature_2m_min&hourly=temperature_2m&current=temperature_2m,precipitation,relative_humidity_2m,apparent_temperature,wind_speed_10m&timezone=Europe%2FMoscow',
+      )
+         .then((res) => {
+            return res.json();
+         })
+         .then((data) => {
+            setWeatherData(data);
+            console.log(data);
+         })
+         .catch((error) => {
+            console.error('Ошибка:', error);
+         });
+   }, []);
+
    return (
       <div className="wrapper">
          <div className="container">
@@ -23,13 +41,18 @@ function App() {
             <div className="content">
                <div className="content-left">
                   <div className="content-left__top">
-                     <WeatherInfo />
-                     <WeatherDetails />
+                     <WeatherInfo temp={weatherData?.current?.temperature_2m || 0} />
+                     <WeatherDetails
+                        feelsLike={weatherData?.current.apparent_temperature}
+                        humidity={weatherData?.current?.relative_humidity_2m}
+                        wind={weatherData?.current?.wind_speed_10m}
+                        precipitation={weatherData?.current?.precipitation}
+                     />
                   </div>
                   <div className="content-left__bottom">
                      <div className="content-left__bottom-title">Daily forecast</div>
                      <div className="content-left__bottom-dayilyForecast">
-                        <DayilyForecast />
+                        <DayilyForecast dailyData={weatherData?.daily} />
                      </div>
                   </div>
                </div>
@@ -39,7 +62,7 @@ function App() {
                      <DaysDropdownBtn />
                   </div>
                   <div className="content-right__items">
-                     <HourlyForecastItem />
+                     <HourlyForecastItem hourlyData={weatherData?.hourly} />
                   </div>
                </div>
             </div>

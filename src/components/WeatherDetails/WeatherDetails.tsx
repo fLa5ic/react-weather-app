@@ -2,25 +2,37 @@ import React from 'react';
 
 import styles from './WeatherDetails.module.scss';
 
-const WeatherDetails: React.FC = () => {
+type WeatherDetailsProps = {
+   feelsLike?: number;
+   humidity?: number;
+   wind?: number;
+   precipitation?: number;
+};
+
+const WeatherDetails: React.FC<WeatherDetailsProps> = ({
+   feelsLike,
+   humidity,
+   wind,
+   precipitation,
+}) => {
    // const detailsItems = ['Feels Like', 'Humidity', 'Wind', 'Precipitation'];
    return (
       <div className={styles.weatherDetails}>
          <div className={styles.item}>
             <div className={styles.title}>Feels Like</div>
-            <span>18°</span>
+            <span>{feelsLike ? Math.round(feelsLike) + '°' : '--'}</span>
          </div>
          <div className={styles.item}>
             <div className={styles.title}>Humidity</div>
-            <span>46%</span>
+            <span>{humidity ? Math.round(humidity) + '%' : '--'}</span>
          </div>
          <div className={styles.item}>
             <div className={styles.title}>Wind</div>
-            <span>14 km/h</span>
+            <span>{wind ? Math.round(wind) + ' km/h' : '--'}</span>
          </div>
          <div className={styles.item}>
             <div className={styles.title}>Precipitation</div>
-            <span>0 mm</span>
+            <span>{precipitation ? Math.round(precipitation) + ' mm' : '0 mm'}</span>
          </div>
       </div>
    );
