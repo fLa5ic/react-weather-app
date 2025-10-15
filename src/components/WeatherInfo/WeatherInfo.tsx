@@ -4,11 +4,7 @@ import sunnySvg from '../../assets/images/icon-sunny.webp';
 
 import styles from './WeatherInfo.module.scss';
 
-type WeatherInfoProps = {
-   temp: string | number;
-};
-
-const WeatherInfo: React.FC<WeatherInfoProps> = ({ temp }) => {
+const WeatherInfo: React.FC = () => {
    return (
       <div className={styles.weatherInfo}>
          <div className={styles.cityAndDate}>
@@ -17,8 +13,7 @@ const WeatherInfo: React.FC<WeatherInfoProps> = ({ temp }) => {
          </div>
          <div className={styles.temperature}>
             <img src={sunnySvg} width={120} alt="Sunny" />
-            {/* 20° */}
-            {temp}°
+            20°
          </div>
       </div>
    );
