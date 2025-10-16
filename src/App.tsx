@@ -15,6 +15,8 @@ import './scss/app.scss';
 
 function App() {
    const [weatherData, setWeatherData] = React.useState<any>(null);
+   const [selectedDayIndex, setSelectedDayIndex] = React.useState(0); // Добавили состояние дня
+   const [currentCity, setCurrentCity] = React.useState('Berlin, Germany'); // Пока статично
 
    React.useEffect(() => {
       fetch(
@@ -41,7 +43,12 @@ function App() {
             <div className="content">
                <div className="content-left">
                   <div className="content-left__top">
-                     <WeatherInfo temp={weatherData?.current?.temperature_2m || 0} />
+                     <WeatherInfo
+                        temp={weatherData?.current?.temperature_2m || 0}
+                        city={currentCity}
+                        date={weatherData?.current?.time} // Передаём время из API
+                     />
+
                      <WeatherDetails
                         feelsLike={weatherData?.current.apparent_temperature}
                         humidity={weatherData?.current?.relative_humidity_2m}
@@ -59,10 +66,16 @@ function App() {
                <div className="content-right">
                   <div className="content-right__header">
                      <div className="content-right__header-title">Hourly forecast</div>
-                     <DaysDropdownBtn />
+                     <DaysDropdownBtn
+                        selectedDay={selectedDayIndex}
+                        onDayChange={setSelectedDayIndex}
+                     />
                   </div>
                   <div className="content-right__items">
-                     <HourlyForecastItem hourlyData={weatherData?.hourly} />
+                     <HourlyForecastItem
+                        hourlyData={weatherData?.hourly}
+                        selectedDay={selectedDayIndex}
+                     />
                   </div>
                </div>
             </div>

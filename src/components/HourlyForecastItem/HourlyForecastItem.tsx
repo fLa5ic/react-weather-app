@@ -9,20 +9,46 @@ type HourlyForecastItemProps = {
       temperature_2m: number[];
       time: string[];
    };
+   selectedDay: number;
 };
 
-const HourlyForecastItem: React.FC<HourlyForecastItemProps> = ({ hourlyData }) => {
-   const hourlyForecastTime = ['3 PM', '4 PM', '5 PM', ' 6 PM', '7 PM', '8 PM', '9 PM', '10 PM'];
+const HourlyForecastItem: React.FC<HourlyForecastItemProps> = ({ hourlyData, selectedDay }) => {
+   if (!hourlyData) {
+      return <div>Loading hourly data...</div>;
+   }
+
+   // Фильтруем часы для выбранного дня
+   const getHoursForSelectedDay = () => {
+      const hoursPerDay = 24;
+      const startIndex = selectedDay * hoursPerDay;
+      const endIndex = startIndex + hoursPerDay;
+
+      return hourlyData.time.slice(startIndex, endIndex).map((time, index) => {
+         const globalIndex = startIndex + index;
+         return {
+            time: new Date(time).toLocaleTimeString('en-US', {
+               hour: 'numeric',
+               hour12: true,
+            }),
+            temperature: Math.round(hourlyData.temperature_2m[globalIndex]),
+         };
+      });
+   };
+
+   const hoursForDay = getHoursForSelectedDay();
+
+   // Берем только часы с 3 PM до 10 PM (15:00 - 22:00)
+   const eveningHours = hoursForDay.filter((_, index) => index >= 15 && index <= 22);
 
    return (
       <>
-         {hourlyForecastTime.map((time: string) => (
-            <div key={time} className={styles.hourlyForecastItem}>
+         {eveningHours.map((hour, index) => (
+            <div key={index} className={styles.hourlyForecastItem}>
                <div className={styles.time}>
                   <img src={weatherIcon} width={40} alt="WeatherImg" />
-                  <span>{time}</span>
+                  <span>{hour.time}</span>
                </div>
-               <p className={styles.temperature}>20°</p>
+               <p className={styles.temperature}>{hour.temperature}°</p>
             </div>
          ))}
       </>

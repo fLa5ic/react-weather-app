@@ -4,14 +4,19 @@ import dropDownIcon from '../../assets/images/icon-dropdown.svg';
 
 import styles from './DaysDropdownBtn.module.scss';
 
-const DaysDropdownBtn: React.FC = () => {
+type DaysDropdownBtnProps = {
+   selectedDay: number;
+   onDayChange: (dayIndex: number) => void;
+};
+
+const DaysDropdownBtn: React.FC<DaysDropdownBtnProps> = ({ selectedDay, onDayChange }) => {
    const [open, setOpen] = React.useState(false);
-   const [selectedDay, setSelectedDay] = React.useState(0);
+   // const [selectedDay, setSelectedDay] = React.useState(0);
 
    const daysList = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
    const onClickDaysListItem = (i: number) => {
-      setSelectedDay(i);
+      onDayChange(i); // Передаём наружу выбранный день
       setOpen(false);
    };
 
