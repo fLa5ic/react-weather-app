@@ -76,12 +76,15 @@
 
       &:focus {
         box-shadow: 0 0 0 .3rem $bgColor, 0 0 0 .5rem $main;
+
+        &.dropDown {
+          display: flex;
+        }
       }
     }
 
     .dropDown {
-      display: none;
-      // display: flex;
+      display: flex;
       flex-direction: column;
 
       padding: .8rem;
@@ -90,7 +93,6 @@
 
       position: absolute;
       width: 526px;
-      height: 184px;
       left: 0;
 
       background: $bgComponents;
@@ -127,6 +129,11 @@
       transition: all .25s ease-out;
 
       &:hover {
+        background: $bgHourlyComp;
+        border: .1rem solid #3C3B5E;
+      }
+
+      &.active {
         background: $bgHourlyComp;
         border: .1rem solid #3C3B5E;
       }

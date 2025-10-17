@@ -18,6 +18,16 @@ function App() {
    const [selectedDayIndex, setSelectedDayIndex] = React.useState(0); // Добавили состояние дня
    const [currentCity, setCurrentCity] = React.useState('Berlin, Germany'); // Пока статично
 
+   const cities = [
+      'Berlin, Germany',
+      'Paris, France',
+      'London, UK',
+      'Madrid, Spain',
+      'Rome, Italy',
+      'Moscow, Russia',
+      'Minsk, Belarus',
+   ];
+
    React.useEffect(() => {
       fetch(
          'https://api.open-meteo.com/v1/forecast?latitude=52.5244&longitude=13.4105&daily=temperature_2m_max,temperature_2m_min&hourly=temperature_2m&current=temperature_2m,precipitation,relative_humidity_2m,apparent_temperature,wind_speed_10m&timezone=Europe%2FMoscow',
@@ -39,7 +49,7 @@ function App() {
          <div className="container">
             <Header />
             <h1 className="mainTitleInApp">How's the sky looking today?</h1>
-            <Search />
+            <Search cities={cities} />
             <div className="content">
                <div className="content-left">
                   <div className="content-left__top">
