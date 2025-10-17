@@ -4,9 +4,11 @@ import styles from './Search.module.scss';
 
 type SearchProps = {
    cities: string[];
+   onCityChange: (city: string) => void;
+   currentCity: string;
 };
 
-const Search: React.FC<SearchProps> = ({ cities }) => {
+const Search: React.FC<SearchProps> = ({ cities, onCityChange, currentCity }) => {
    const [searchDropDown, setSearchDropDown] = React.useState(false);
 
    const inputRef = React.useRef<HTMLInputElement>(null);
@@ -16,21 +18,23 @@ const Search: React.FC<SearchProps> = ({ cities }) => {
       setSearchDropDown(true);
    };
 
+   const handleCityClick = (city: string) => {
+      onCityChange(city); // Передаём выбранный город в App
+      setSearchDropDown(false);
+      if (inputRef.current) {
+         inputRef.current.value = ''; // Очищаем input
+      }
+   };
+
    React.useEffect(() => {
       const handleClickOutside = (event: MouseEvent) => {
-         // Спросим: есть ли новый ключ? Если да - используем его
          const path = event.composedPath && event.composedPath();
-
-         // Если дверь существует И ключ существует И кликнули НЕ на дверь
          if (searchRef.current && path && !path.includes(searchRef.current)) {
-            setSearchDropDown(false); // Закрываем окошко!
+            setSearchDropDown(false);
          }
       };
 
-      // Слушаем все клики на странице
       document.body.addEventListener('click', handleClickOutside);
-
-      // Убираем слушателя, когда компонент исчезает
       return () => {
          document.body.removeEventListener('click', handleClickOutside);
       };
@@ -45,7 +49,12 @@ const Search: React.FC<SearchProps> = ({ cities }) => {
             {searchDropDown && (
                <div className={styles.dropDown}>
                   {cities.map((city) => (
-                     <div key={city} className={styles.dropDownItem}>
+                     <div
+                        key={city}
+                        className={`${styles.dropDownItem} ${
+                           currentCity === city ? styles.active : ''
+                        }`}
+                        onClick={() => handleCityClick(city)}>
                         {city}
                      </div>
                   ))}
