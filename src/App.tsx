@@ -1,8 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 
-// import { fetchWeatherApi } from 'openmeteo';
-
 import Header from './components/Header/Header';
 import Search from './components/Search/Search';
 import WeatherInfo from './components/WeatherInfo/WeatherInfo';
@@ -13,11 +11,38 @@ import HourlyForecastItem from './components/HourlyForecastItem/HourlyForecastIt
 
 import './scss/app.scss';
 
+type Units = 'metric' | 'imperial';
+
 function App() {
    const [weatherData, setWeatherData] = React.useState<any>(null);
    const [selectedDayIndex, setSelectedDayIndex] = React.useState(0);
    const [currentCity, setCurrentCity] = React.useState('Berlin, Germany');
+
+   const [units, setUnits] = React.useState<Units>('metric');
+
    const [loading, setLoading] = React.useState(false);
+
+   // Простые функции конвертации - просто копируй это
+   const convertTemp = (temp: number): number => {
+      if (units === 'imperial') {
+         return Math.round((temp * 9) / 5 + 32); // в Фаренгейты
+      }
+      return Math.round(temp); // в Цельсии
+   };
+
+   const convertSpeed = (speed: number): number => {
+      if (units === 'imperial') {
+         return Math.round(speed * 0.621371); // в mph
+      }
+      return Math.round(speed); // в km/h
+   };
+
+   const convertPrecipitation = (precip: number): number => {
+      if (units === 'imperial') {
+         return Math.round(precip * 0.0393701 * 100) / 100; // в дюймы
+      }
+      return precip; // в мм
+   };
 
    const cities = [
       { name: 'Berlin, Germany', lat: 52.5244, lon: 13.4105 },
@@ -94,7 +119,7 @@ function App() {
    return (
       <div className="wrapper">
          <div className="container">
-            <Header />
+            <Header units={units} setUnits={setUnits} />
             <h1 className="mainTitleInApp">How's the sky looking today?</h1>
             <Search
                cities={cities.map((city) => city.name)}
@@ -108,17 +133,18 @@ function App() {
                <div className="content-left">
                   <div className="content-left__top">
                      <WeatherInfo
-                        temp={weatherData?.current?.temperature_2m || 0}
+                        temp={convertTemp(weatherData?.current?.temperature_2m || 0)}
                         city={currentCity}
                         date={weatherData?.current?.time}
                         weatherCode={weatherData?.current?.weather_code}
                         getWeatherIcon={getWeatherIcon} // Передаём функцию
                      />
                      <WeatherDetails
-                        feelsLike={weatherData?.current?.apparent_temperature}
+                        feelsLike={convertTemp(weatherData?.current?.apparent_temperature)}
                         humidity={weatherData?.current?.relative_humidity_2m}
-                        wind={weatherData?.current?.wind_speed_10m}
-                        precipitation={weatherData?.current?.precipitation}
+                        wind={convertSpeed(weatherData?.current?.wind_speed_10m)}
+                        precipitation={convertPrecipitation(weatherData?.current?.precipitation)}
+                        units={units}
                      />
                   </div>
                   <div className="content-left__bottom">
@@ -127,6 +153,7 @@ function App() {
                         <DayilyForecast
                            dailyData={weatherData?.daily}
                            getWeatherIcon={getWeatherIcon}
+                           convertTemp={convertTemp}
                         />
                      </div>
                   </div>
@@ -144,6 +171,7 @@ function App() {
                         hourlyData={weatherData?.hourly}
                         selectedDay={selectedDayIndex}
                         getWeatherIcon={getWeatherIcon}
+                        convertTemp={convertTemp}
                      />
                   </div>
                </div>

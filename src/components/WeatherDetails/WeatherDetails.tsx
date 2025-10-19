@@ -7,6 +7,7 @@ type WeatherDetailsProps = {
    humidity?: number;
    wind?: number;
    precipitation?: number;
+   units: 'metric' | 'imperial';
 };
 
 const WeatherDetails: React.FC<WeatherDetailsProps> = ({
@@ -14,25 +15,32 @@ const WeatherDetails: React.FC<WeatherDetailsProps> = ({
    humidity,
    wind,
    precipitation,
+   units,
 }) => {
    // const detailsItems = ['Feels Like', 'Humidity', 'Wind', 'Precipitation'];
    return (
       <div className={styles.weatherDetails}>
          <div className={styles.item}>
             <div className={styles.title}>Feels Like</div>
-            <span>{feelsLike ? Math.round(feelsLike) + '°' : '--'}</span>
+            <span>{feelsLike !== undefined ? `${feelsLike}°` : '--'}</span>
          </div>
          <div className={styles.item}>
             <div className={styles.title}>Humidity</div>
-            <span>{humidity ? Math.round(humidity) + '%' : '--'}</span>
+            <span>{humidity !== undefined ? `${humidity}%` : '--'}</span>
          </div>
          <div className={styles.item}>
             <div className={styles.title}>Wind</div>
-            <span>{wind ? Math.round(wind) + ' km/h' : '--'}</span>
+            <span>
+               {wind !== undefined ? `${wind} ${units === 'metric' ? 'km/h' : 'mph'}` : '--'}
+            </span>
          </div>
          <div className={styles.item}>
             <div className={styles.title}>Precipitation</div>
-            <span>{precipitation ? Math.round(precipitation) + ' mm' : '0 mm'}</span>
+            <span>
+               {precipitation !== undefined
+                  ? `${precipitation} ${units === 'metric' ? 'mm' : 'in'}`
+                  : '--'}
+            </span>
          </div>
       </div>
    );

@@ -18,9 +18,14 @@ type DayilyForecastProps = {
       weather_code: number[];
    };
    getWeatherIcon: (code: number) => string;
+   convertTemp: (temp: number) => number;
 };
 
-const DayilyForecast: React.FC<DayilyForecastProps> = ({ dailyData, getWeatherIcon }) => {
+const DayilyForecast: React.FC<DayilyForecastProps> = ({
+   dailyData,
+   getWeatherIcon,
+   convertTemp,
+}) => {
    if (!dailyData) {
       return <div>Loading daily forecast...</div>;
    }
@@ -57,10 +62,10 @@ const DayilyForecast: React.FC<DayilyForecastProps> = ({ dailyData, getWeatherIc
                   <img src={weatherIconSrc} alt="Weather" />
                   <div className={styles.temperature}>
                      <span className={styles.maxTemp}>
-                        {Math.round(dailyData.temperature_2m_max[index])}°
+                        {convertTemp(dailyData.temperature_2m_max[index])}°
                      </span>
                      <span className={styles.minTemp}>
-                        {Math.round(dailyData.temperature_2m_min[index])}°
+                        {convertTemp(dailyData.temperature_2m_min[index])}°
                      </span>
                   </div>
                </div>

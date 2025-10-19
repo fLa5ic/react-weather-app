@@ -18,9 +18,15 @@ type HourlyForecastItemProps = {
    };
    selectedDay: number;
    getWeatherIcon: (code: number) => string;
+   convertTemp: (temp: number) => number;
 };
 
-const HourlyForecastItem: React.FC<HourlyForecastItemProps> = ({ hourlyData, selectedDay, getWeatherIcon }) => {
+const HourlyForecastItem: React.FC<HourlyForecastItemProps> = ({
+   hourlyData,
+   selectedDay,
+   getWeatherIcon,
+   convertTemp,
+}) => {
    if (!hourlyData) {
       return <div>Loading hourly data...</div>;
    }
@@ -54,7 +60,7 @@ const HourlyForecastItem: React.FC<HourlyForecastItemProps> = ({ hourlyData, sel
                hour: 'numeric',
                hour12: true,
             }),
-            temperature: Math.round(hourlyData.temperature_2m[globalIndex]),
+            temperature: convertTemp(hourlyData.temperature_2m[globalIndex]),
             weatherCode: hourlyData.weather_code[globalIndex],
          };
       });
