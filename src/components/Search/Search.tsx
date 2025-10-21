@@ -39,7 +39,16 @@ const Search: React.FC<SearchProps> = ({
   };
 
   const handleCityClick = (city: string) => {
-    onCityChange(city);
+    // Проверяем, есть ли город в статичном списке
+    const isStaticCity = cities.includes(city);
+
+    if (isStaticCity) {
+      // Если статичный город - используем старую логику
+      onCityChange(city);
+    } else {
+      // Если город из истории - делаем поиск через геокодинг
+      onSearch(city);
+    }
     setShowCities(false);
     setSearchValue('');
   };
@@ -101,7 +110,9 @@ const Search: React.FC<SearchProps> = ({
               </>
             ) : (
               // Показываем поисковые предложения
-              <div className={styles.dropDownItem} onClick={() => handleCityClick(searchValue)}>Search for: "{searchValue}"</div>
+              <div className={styles.dropDownItem} onClick={() => handleCityClick(searchValue)}>
+                Search for: "{searchValue}"
+              </div>
             )}
           </div>
         )}

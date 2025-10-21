@@ -26,6 +26,8 @@ function Home({ units, setUnits }: HomeProps) {
 
   const [loading, setLoading] = React.useState(false);
 
+  const [error, setError] = React.useState<string | null>();
+
   const convertTemp = (temp: number): number => {
     if (units === 'imperial') {
       return Math.round((temp * 9) / 5 + 32); // в Фаренгейты
@@ -125,6 +127,7 @@ function Home({ units, setUnits }: HomeProps) {
 
   const searchCity = async (cityName: string) => {
     setLoading(true);
+    setError(null);
     try {
       console.log('Ищем город:', cityName);
 
@@ -150,11 +153,10 @@ function Home({ units, setUnits }: HomeProps) {
           return newHistory;
         });
       } else {
-        alert('City not found');
+        setError('city-not-found');
       }
     } catch (error) {
-      console.error('Geocoding error:', error);
-      alert('Error searching city');
+      setError('api-error');
     } finally {
       setLoading(false);
     }
@@ -167,6 +169,15 @@ function Home({ units, setUnits }: HomeProps) {
       return newHistory;
     });
   };
+
+  if (error === 'city-not-found') {
+    return <NotFound />;
+  }
+
+  if (error === 'api-error') {
+    return <ApiError />;
+  }
+
   return (
     <>
       <h1 className="mainTitleInApp">How's the sky looking today?</h1>
