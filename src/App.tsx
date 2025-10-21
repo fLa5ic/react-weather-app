@@ -9,6 +9,9 @@ import DayilyForecast from './components/DailyForecast/DailyForecast';
 import DaysDropdownBtn from './components/DaysDropdownBtn/DaysDropdownBtn';
 import HourlyForecastItem from './components/HourlyForecastItem/HourlyForecastItem';
 
+import NotFound from './pages/NotFound';
+import ApiError from './pages/ApiError';
+
 import './scss/app.scss';
 
 type Units = 'metric' | 'imperial';
@@ -170,7 +173,9 @@ function App() {
     <div className="wrapper">
       <div className="container">
         <Header units={units} setUnits={setUnits} />
+        <ApiError />
         <h1 className="mainTitleInApp">How's the sky looking today?</h1>
+
         <Search
           cities={cities.map((city) => city.name)}
           onCityChange={handleCityChange}
