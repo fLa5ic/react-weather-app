@@ -1,24 +1,18 @@
 import React from 'react';
+import { useWeather } from '../../context/WeatherContext';
+
 import searchSvg from '../../assets/images/icon-search.svg';
 import styles from './Search.module.scss';
 
-type SearchProps = {
-  cities: string[];
-  onCityChange: (city: string) => void;
-  currentCity: string;
-  onSearch: (query: string) => void;
-  searchHistory: string[];
-  onRemoveFromHistory: (city: string) => void;
-};
-
-const Search: React.FC<SearchProps> = ({
-  cities,
-  onCityChange,
-  currentCity,
-  onSearch,
-  searchHistory,
-  onRemoveFromHistory,
-}) => {
+const Search: React.FC = () => {
+  const {
+    cities, // Добавляем cities в Context
+    currentCity,
+    searchHistory,
+    handleCityChange, // Эти функции должны быть в Context
+    searchCity,
+    removeFromHistory,
+  } = useWeather();
   const [searchValue, setSearchValue] = React.useState('');
   const [showCities, setShowCities] = React.useState(false);
 
@@ -27,7 +21,7 @@ const Search: React.FC<SearchProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchValue.trim()) {
-      onSearch(searchValue);
+      searchCity(searchValue); // Используем из context
       setSearchValue('');
       setShowCities(false);
     }
@@ -39,15 +33,18 @@ const Search: React.FC<SearchProps> = ({
   };
 
   const handleCityClick = (city: string) => {
-    // Проверяем, есть ли город в статичном списке
-    const isStaticCity = cities.includes(city);
+    // cities - это массив объектов {name: string, lat: number, lon: number}
+    // city - это строка с названием города
+
+    // Проверяем, есть ли город в статичном списке по имени
+    const isStaticCity = cities.some((cityObj) => cityObj.name === city);
 
     if (isStaticCity) {
       // Если статичный город - используем старую логику
-      onCityChange(city);
+      handleCityChange(city); // Используем из context
     } else {
       // Если город из истории - делаем поиск через геокодинг
-      onSearch(city);
+      searchCity(city); // Используем из context
     }
     setShowCities(false);
     setSearchValue('');
@@ -91,7 +88,7 @@ const Search: React.FC<SearchProps> = ({
                       className={styles.removeBtn}
                       onClick={(e) => {
                         e.stopPropagation(); // Чтобы не срабатывал клик на весь элемент
-                        onRemoveFromHistory(city);
+                        removeFromHistory(city); // Используем из context
                       }}>
                       ×
                     </button>
@@ -99,12 +96,12 @@ const Search: React.FC<SearchProps> = ({
                 ))}
                 {cities.map((city) => (
                   <div
-                    key={city}
+                    key={city.name}
                     className={`${styles.dropDownItem} ${
-                      currentCity === city ? styles.active : ''
+                      currentCity === city.name ? styles.active : ''
                     }`}
-                    onClick={() => handleCityClick(city)}>
-                    {city}
+                    onClick={() => handleCityClick(city.name)}>
+                    {city.name}
                   </div>
                 ))}
               </>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useWeather } from '../../context/WeatherContext';
 // Импортируем все иконки как в WeatherInfo
 import sunnySvg from '../../assets/images/icon-sunny.webp';
 import partlyCloudySvg from '../../assets/images/icon-partly-cloudy.webp';
@@ -11,67 +12,67 @@ import fogSvg from '../../assets/images/icon-fog.webp';
 import styles from './DailyForecast.module.scss';
 
 type DayilyForecastProps = {
-   dailyData?: {
-      time: string[];
-      temperature_2m_max: number[];
-      temperature_2m_min: number[];
-      weather_code: number[];
-   };
-   getWeatherIcon: (code: number) => string;
-   convertTemp: (temp: number) => number;
+  dailyData?: {
+    time: string[];
+    temperature_2m_max: number[];
+    temperature_2m_min: number[];
+    weather_code: number[];
+  };
+  getWeatherIcon: (code: number) => string;
+  convertTemp: (temp: number) => number;
 };
 
-const DayilyForecast: React.FC<DayilyForecastProps> = ({
-   dailyData,
-   getWeatherIcon,
-   convertTemp,
-}) => {
-   if (!dailyData) {
-      return <div>Loading daily forecast...</div>;
-   }
+const DayilyForecast: React.FC = () => {
+  const { weatherData, getWeatherIcon, convertTemp } = useWeather();
 
-   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const dailyData = weatherData?.daily;
 
-   // Функция для получения иконки (аналогично WeatherInfo)
-   const getWeatherIconSrc = (code: number) => {
-      const iconName = getWeatherIcon(code);
-      const iconMap: { [key: string]: string } = {
-         'icon-sunny.webp': sunnySvg,
-         'icon-partly-cloudy.webp': partlyCloudySvg,
-         'icon-overcast.webp': overcastSvg,
-         'icon-drizzle.webp': drizzleSvg,
-         'icon-rain.webp': rainSvg,
-         'icon-snow.webp': snowSvg,
-         'icon-storm.webp': stormSvg,
-         'icon-fog.webp': fogSvg,
-      };
-      return iconMap[iconName] || sunnySvg;
-   };
+  if (!dailyData) {
+    return <div>Loading daily forecast...</div>;
+  }
 
-   return (
-      <>
-         {dailyData.time.map((dateString, index) => {
-            const date = new Date(dateString);
-            const dayName = daysOfWeek[date.getDay()];
-            const weatherCode = dailyData.weather_code[index];
-            const weatherIconSrc = getWeatherIconSrc(weatherCode);
+  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-            return (
-               <div key={dateString} className={styles.item}>
-                  <div className={styles.day}>{dayName}</div>
-                  <img src={weatherIconSrc} alt="Weather" />
-                  <div className={styles.temperature}>
-                     <span className={styles.maxTemp}>
-                        {convertTemp(dailyData.temperature_2m_max[index])}°
-                     </span>
-                     <span className={styles.minTemp}>
-                        {convertTemp(dailyData.temperature_2m_min[index])}°
-                     </span>
-                  </div>
-               </div>
-            );
-         })}
-      </>
-   );
+  // Функция для получения иконки (аналогично WeatherInfo)
+  const getWeatherIconSrc = (weatherCode: number) => {
+    const iconName = getWeatherIcon(weatherCode);
+    const iconMap: { [key: string]: string } = {
+      'icon-sunny.webp': sunnySvg,
+      'icon-partly-cloudy.webp': partlyCloudySvg,
+      'icon-overcast.webp': overcastSvg,
+      'icon-drizzle.webp': drizzleSvg,
+      'icon-rain.webp': rainSvg,
+      'icon-snow.webp': snowSvg,
+      'icon-storm.webp': stormSvg,
+      'icon-fog.webp': fogSvg,
+    };
+    return iconMap[iconName] || sunnySvg;
+  };
+
+  return (
+    <>
+      {dailyData.time.map((dateString: string, index: number) => {
+        const date = new Date(dateString);
+        const dayName = daysOfWeek[date.getDay()];
+        const weatherCode = dailyData.weather_code[index];
+        const weatherIconSrc = getWeatherIconSrc(weatherCode);
+
+        return (
+          <div key={dateString} className={styles.item}>
+            <div className={styles.day}>{dayName}</div>
+            <img src={weatherIconSrc} alt="Weather" />
+            <div className={styles.temperature}>
+              <span className={styles.maxTemp}>
+                {convertTemp(dailyData.temperature_2m_max[index])}°
+              </span>
+              <span className={styles.minTemp}>
+                {convertTemp(dailyData.temperature_2m_min[index])}°
+              </span>
+            </div>
+          </div>
+        );
+      })}
+    </>
+  );
 };
 export default DayilyForecast;

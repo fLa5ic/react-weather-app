@@ -1,4 +1,4 @@
-import React from 'react';
+import { WeatherProvider } from './context/WeatherContext';
 
 import { Routes, Route } from 'react-router-dom';
 
@@ -9,22 +9,22 @@ import NotFound from './pages/NotFound';
 
 import './scss/app.scss';
 
-type Units = 'metric' | 'imperial';
-
 function App() {
-   const [units, setUnits] = React.useState<Units>('metric');
-   return (
+  return (
+    <WeatherProvider>
       <div className="wrapper">
-         <div className="container">
-            <Header units={units} setUnits={setUnits} />
-            <Routes>
-               <Route path="/" element={<Home units={units} setUnits={setUnits} />} />
-               <Route path="/not-found" element={<NotFound units={units} setUnits={setUnits} />} />
-               <Route path="/api-error" element={<ApiError />} />
-            </Routes>
-         </div>
+        <div className="container">
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/not-found" element={<NotFound />} />
+            <Route path="/api-error" element={<ApiError />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
       </div>
-   );
+    </WeatherProvider>
+  );
 }
 
 export default App;

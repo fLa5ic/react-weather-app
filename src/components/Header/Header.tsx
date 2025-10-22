@@ -1,4 +1,6 @@
 import React from 'react';
+import { useWeather } from '../../context/WeatherContext';
+
 import { Link } from 'react-router-dom';
 
 import logoSvg from '../../assets/images/logo.svg';
@@ -7,12 +9,13 @@ import unitsArrowDown from '../../assets/images/icon-dropdown.svg';
 import optionSwitcCheckmark from '../../assets/images/icon-checkmark.svg';
 import styles from './Header.module.scss';
 
-type HeaderProps = {
-  units: 'metric' | 'imperial';
-  setUnits: (units: 'metric' | 'imperial') => void;
-};
+// type HeaderProps = {
+//   units: 'metric' | 'imperial';
+//   setUnits: (units: 'metric' | 'imperial') => void;
+// };
 
-const Header: React.FC<HeaderProps> = ({ units, setUnits }) => {
+const Header: React.FC = () => {
+  const { units, setUnits } = useWeather();
   const [open, setOpen] = React.useState(false);
 
   const handleSwitchToImperial = () => {
