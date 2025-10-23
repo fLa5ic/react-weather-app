@@ -1,46 +1,134 @@
-# Getting Started with Create React App
+# ⛅ React Weather App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern, responsive weather application built with React, TypeScript, and SCSS. This app provides real-time weather information and forecasts for cities worldwide.
 
-## Available Scripts
+## 🌟 Features
 
-In the project directory, you can run:
+- **Real-time Weather Data**: Get current weather conditions including temperature, humidity, wind speed, and precipitation
+- **7-Day Forecast**: View daily weather forecasts with min/max temperatures
+- **Hourly Forecast**: Check hourly weather predictions for the selected day
+- **City Search**: Search for any city worldwide using OpenStreetMap geocoding
+- **Search History**: Quick access to previously searched cities (stored in localStorage)
+- **Popular Cities**: Quick selection from pre-configured popular cities
+- **Unit Conversion**: Toggle between Metric (°C, km/h, mm) and Imperial (°F, mph, in) units
+- **Responsive Design**: Clean, modern UI with smooth interactions
+- **Type-Safe**: Built with TypeScript for enhanced code quality and developer experience
 
-### `npm start`
+## 🛠️ Technologies Used
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **React 19** - UI library
+- **TypeScript** - Type safety and better developer experience
+- **React Router v6** - Client-side routing
+- **Axios** - HTTP requests
+- **SCSS Modules** - Scoped styling
+- **Open-Meteo API** - Weather data
+- **OpenStreetMap Nominatim API** - Geocoding service
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 📦 Installation
 
-### `npm test`
+1. Clone the repository:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+git clone https://github.com/yourusername/react-weather-app.git
+cd react-weather-app
+```
 
-### `npm run build`
+2. Install dependencies:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+npm install
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. Start the development server:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+npm start
+```
 
-### `npm run eject`
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## 🚀 Available Scripts
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- `npm start` - Runs the app in development mode
+- `npm run build` - Builds the app for production
+- `npm test` - Launches the test runner
+- `npm run eject` - Ejects from Create React App (one-way operation)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## 📁 Project Structure
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```
+src/
+├── assets/           # Images, fonts, and static files
+├── components/       # Reusable React components
+│   ├── ApiErrorBlock/
+│   ├── DailyForecast/
+│   ├── DaysDropdownBtn/
+│   ├── Header/
+│   ├── HourlyForecastItem/
+│   ├── NotFoundBlock/
+│   ├── Search/
+│   ├── WeatherDetails/
+│   └── WeatherInfo/
+├── constants/        # App constants and configuration
+├── context/          # React Context for state management
+├── pages/            # Page components
+│   ├── ApiError.tsx
+│   ├── Home.tsx
+│   └── NotFound.tsx
+├── scss/             # Global styles and SCSS utilities
+├── types/            # TypeScript type definitions
+├── utils/            # Utility functions
+├── App.tsx           # Main App component
+└── index.tsx         # Entry point
+```
 
-## Learn More
+## 🎨 Key Features Explained
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Weather Context
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The app uses React Context API for global state management, making weather data, units, and settings accessible throughout the component tree.
+
+### Type Safety
+
+All API responses and data structures are properly typed with TypeScript interfaces, ensuring type safety and better developer experience.
+
+### Modular Components
+
+Components are organized with SCSS modules for scoped styling, making the codebase maintainable and scalable.
+
+### Error Handling
+
+Dedicated error pages for API failures and search results not found, with navigation back to the main page.
+
+## 🌐 APIs Used
+
+- **Open-Meteo API**: Free weather API providing current conditions, hourly and daily forecasts
+
+  - No API key required
+  - Rate limit: Reasonable free tier
+
+- **OpenStreetMap Nominatim API**: Geocoding service to convert city names to coordinates
+  - No API key required
+  - Please respect usage policy
+
+## 💡 Future Improvements
+
+- Loading skeletons for better UX during data fetching
+- Responsive design for mobile devices
+- Weather alerts and notifications
+- Geolocation support
+- More detailed weather information
+- Charts for temperature/precipitation trends
+- Dark mode support
+
+## 📝 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## 👨‍💻 Author
+
+Created as a portfolio project to demonstrate modern React development practices.
+
+---
+
+**Note**: This project uses free weather APIs. Please be respectful of rate limits and usage policies.

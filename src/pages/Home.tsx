@@ -1,7 +1,7 @@
 import Search from '../components/Search/Search';
 import WeatherInfo from '../components/WeatherInfo/WeatherInfo';
 import WeatherDetails from '../components/WeatherDetails/WeatherDetails';
-import DayilyForecast from '../components/DailyForecast/DailyForecast';
+import DailyForecast from '../components/DailyForecast/DailyForecast';
 import DaysDropdownBtn from '../components/DaysDropdownBtn/DaysDropdownBtn';
 import HourlyForecastItem from '../components/HourlyForecastItem/HourlyForecastItem';
 
@@ -20,7 +20,7 @@ function Home() {
           <div className="content-left__bottom">
             <div className="content-left__bottom-title">Daily forecast</div>
             <div className="content-left__bottom-dayilyForecast">
-              <DayilyForecast />
+              <DailyForecast />
             </div>
           </div>
         </div>

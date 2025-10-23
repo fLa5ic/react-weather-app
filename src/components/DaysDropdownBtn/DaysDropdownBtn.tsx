@@ -1,5 +1,6 @@
 import React from 'react';
 import { useWeather } from '../../context/WeatherContext';
+import { DAYS_OF_WEEK_FULL } from '../../constants';
 
 import dropDownIcon from '../../assets/images/icon-dropdown.svg';
 
@@ -9,10 +10,7 @@ const DaysDropdownBtn: React.FC = () => {
   const { selectedDayIndex, setSelectedDayIndex } = useWeather();
   const [open, setOpen] = React.useState(false);
 
-  // Добавить ref
   const dropdownRef = React.useRef<HTMLDivElement>(null);
-
-  const daysList = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
   const onClickDaysListItem = (i: number) => {
     setSelectedDayIndex(i);
@@ -35,12 +33,12 @@ const DaysDropdownBtn: React.FC = () => {
   return (
     <div ref={dropdownRef} className={styles.daysDropdownBtnWrapper}>
       <button onClick={() => setOpen(!open)} className={styles.daysDropdownBtn}>
-        {daysList[selectedDayIndex]}
+        {DAYS_OF_WEEK_FULL[selectedDayIndex]}
         <img src={dropDownIcon} alt="dropDownIcon" />
       </button>
       {open && (
         <div className={styles.daysDropdownPopup}>
-          {daysList.map((name, i) => (
+          {DAYS_OF_WEEK_FULL.map((name, i) => (
             <button
               key={i}
               onClick={() => onClickDaysListItem(i)}

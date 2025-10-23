@@ -1,20 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import axios from 'axios';
-
-type City = {
-  name: string;
-  lat: number;
-  lon: number;
-};
-
-type Units = 'metric' | 'imperial';
+import { WeatherData, City, Units } from '../types/weather';
+import { CITIES, DEFAULT_CITY, DEFAULT_CITY_LAT, DEFAULT_CITY_LON } from '../constants';
 
 type WeatherContextType = {
   // States
   units: Units;
-  weatherData: any;
+  weatherData: WeatherData | null;
   currentCity: string;
   searchHistory: string[];
   selectedDayIndex: number;
@@ -24,7 +17,7 @@ type WeatherContextType = {
 
   // Setters
   setUnits: (units: Units) => void;
-  setWeatherData: (data: any) => void;
+  setWeatherData: (data: WeatherData | null) => void;
   setCurrentCity: (city: string) => void;
   setSearchHistory: (history: string[]) => void;
   setSelectedDayIndex: (dayIndex: number) => void;
@@ -57,8 +50,8 @@ export const WeatherProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const navigate = useNavigate();
 
   const [units, setUnits] = React.useState<Units>('metric');
-  const [weatherData, setWeatherData] = React.useState<any>(null);
-  const [currentCity, setCurrentCity] = React.useState('Minsk, Belarus');
+  const [weatherData, setWeatherData] = React.useState<WeatherData | null>(null);
+  const [currentCity, setCurrentCity] = React.useState(DEFAULT_CITY);
   const [searchHistory, setSearchHistory] = React.useState<string[]>([]);
   const [selectedDayIndex, setSelectedDayIndex] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
@@ -84,16 +77,6 @@ export const WeatherProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
     return precip; // в мм
   };
-
-  const cities: City[] = [
-    { name: 'Minsk, Belarus', lat: 53.9045, lon: 27.5615 },
-    { name: 'Berlin, Germany', lat: 52.5244, lon: 13.4105 },
-    { name: 'Paris, France', lat: 48.8566, lon: 2.3522 },
-    { name: 'London, UK', lat: 51.5074, lon: -0.1278 },
-    { name: 'Madrid, Spain', lat: 40.4168, lon: -3.7038 },
-    { name: 'Rome, Italy', lat: 41.9028, lon: 12.4964 },
-    { name: 'Moscow, Russia', lat: 55.7558, lon: 37.6173 },
-  ];
 
   const fetchWeather = async (lat: number, lon: number) => {
     setLoading(true);
@@ -147,7 +130,7 @@ export const WeatherProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   // Функция смены города
   const handleCityChange = async (cityName: string) => {
-    const selectedCity = cities.find((city) => city.name === cityName);
+    const selectedCity = CITIES.find((city) => city.name === cityName);
     if (selectedCity) {
       setCurrentCity(cityName);
       await fetchWeather(selectedCity.lat, selectedCity.lon);
@@ -160,30 +143,26 @@ export const WeatherProvider: React.FC<{ children: React.ReactNode }> = ({ child
     if (savedHistory) {
       setSearchHistory(JSON.parse(savedHistory));
     }
-    // Загружаем погоду для Минска при первом рендере
-    fetchWeather(53.9045, 27.5615);
+    // Загружаем погоду для дефолтного города при первом рендере
+    fetchWeather(DEFAULT_CITY_LAT, DEFAULT_CITY_LON);
   }, []);
 
   const searchCity = async (cityName: string) => {
     setLoading(true);
     setError(null);
     try {
-      console.log('Ищем город:', cityName);
-
       const geoResponse = await axios.get(
         `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
           cityName,
         )}&limit=1&accept-language=en`,
       );
 
-      console.log('Результат геокодинга:', geoResponse.data);
-
       if (geoResponse.data.length > 0) {
         const { lat, lon, display_name } = geoResponse.data[0];
 
         const cityNameEn = display_name.split(',')[0];
         setCurrentCity(cityNameEn);
-        fetchWeather(parseFloat(lat), parseFloat(lon));
+        await fetchWeather(parseFloat(lat), parseFloat(lon));
 
         setSearchHistory((prev) => {
           const newHistory = [cityName, ...prev.filter((item) => item !== cityName)].slice(0, 10);
@@ -231,7 +210,7 @@ export const WeatherProvider: React.FC<{ children: React.ReactNode }> = ({ child
     convertSpeed,
     convertPrecipitation,
     getWeatherIcon,
-    cities,
+    cities: CITIES,
   };
   return <WeatherContext.Provider value={value}>{children}</WeatherContext.Provider>;
 };

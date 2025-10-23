@@ -7,9 +7,18 @@ const WeatherDetails: React.FC = () => {
   const { weatherData, units, convertTemp, convertSpeed, convertPrecipitation } = useWeather();
 
   const humidity = weatherData?.current?.relative_humidity_2m;
-  const feelsLike = convertTemp(weatherData?.current?.apparent_temperature);
-  const precipitation = convertPrecipitation(weatherData?.current?.precipitation);
-  const wind = convertSpeed(weatherData?.current?.wind_speed_10m);
+  const feelsLike =
+    weatherData?.current?.apparent_temperature !== undefined
+      ? convertTemp(weatherData.current.apparent_temperature)
+      : undefined;
+  const precipitation =
+    weatherData?.current?.precipitation !== undefined
+      ? convertPrecipitation(weatherData.current.precipitation)
+      : undefined;
+  const wind =
+    weatherData?.current?.wind_speed_10m !== undefined
+      ? convertSpeed(weatherData.current.wind_speed_10m)
+      : undefined;
 
   return (
     <div className={styles.weatherDetails}>

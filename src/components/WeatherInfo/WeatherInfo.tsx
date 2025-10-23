@@ -1,14 +1,6 @@
 import React from 'react';
 import { useWeather } from '../../context/WeatherContext';
-// Импортируем все иконки
-import sunnySvg from '../../assets/images/icon-sunny.webp';
-import partlyCloudySvg from '../../assets/images/icon-partly-cloudy.webp';
-import overcastSvg from '../../assets/images/icon-overcast.webp';
-import drizzleSvg from '../../assets/images/icon-drizzle.webp';
-import rainSvg from '../../assets/images/icon-rain.webp';
-import snowSvg from '../../assets/images/icon-snow.webp';
-import stormSvg from '../../assets/images/icon-storm.webp';
-import fogSvg from '../../assets/images/icon-fog.webp';
+import { getWeatherIconSrc } from '../../utils/weatherIcons';
 import styles from './WeatherInfo.module.scss';
 
 const WeatherInfo: React.FC = () => {
@@ -29,23 +21,7 @@ const WeatherInfo: React.FC = () => {
     });
   };
 
-  // Получаем имя иконки и импортируем её
-  const getWeatherIconSrc = (code: number) => {
-    const iconName = getWeatherIcon(code);
-    const iconMap: { [key: string]: string } = {
-      'icon-sunny.webp': sunnySvg,
-      'icon-partly-cloudy.webp': partlyCloudySvg,
-      'icon-overcast.webp': overcastSvg,
-      'icon-drizzle.webp': drizzleSvg,
-      'icon-rain.webp': rainSvg,
-      'icon-snow.webp': snowSvg,
-      'icon-storm.webp': stormSvg,
-      'icon-fog.webp': fogSvg,
-    };
-    return iconMap[iconName] || sunnySvg;
-  };
-
-  const weatherIconSrc = weatherCode ? getWeatherIconSrc(weatherCode) : sunnySvg;
+  const weatherIconSrc = weatherCode ? getWeatherIconSrc(weatherCode, getWeatherIcon) : '';
 
   return (
     <div className={styles.weatherInfo}>
