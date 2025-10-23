@@ -9,14 +9,11 @@ import unitsArrowDown from '../../assets/images/icon-dropdown.svg';
 import optionSwitcCheckmark from '../../assets/images/icon-checkmark.svg';
 import styles from './Header.module.scss';
 
-// type HeaderProps = {
-//   units: 'metric' | 'imperial';
-//   setUnits: (units: 'metric' | 'imperial') => void;
-// };
-
 const Header: React.FC = () => {
   const { units, setUnits } = useWeather();
   const [open, setOpen] = React.useState(false);
+
+  const unitsRef = React.useRef<HTMLDivElement>(null);
 
   const handleSwitchToImperial = () => {
     setUnits('imperial');
@@ -28,6 +25,18 @@ const Header: React.FC = () => {
     setOpen(false);
   };
 
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const path = event.composedPath && event.composedPath();
+      if (unitsRef.current && path && !path.includes(unitsRef.current)) {
+        setOpen(false);
+      }
+    };
+
+    document.body.addEventListener('click', handleClickOutside);
+    return () => document.body.removeEventListener('click', handleClickOutside);
+  }, []);
+
   return (
     <div className={styles.header}>
       <div className={styles.wrap}>
@@ -36,7 +45,8 @@ const Header: React.FC = () => {
             <img src={logoSvg} alt="Weather Now" />
           </Link>
         </div>
-        <div className={styles.unitsWrap}>
+        
+        <div ref={unitsRef} className={styles.unitsWrap}>
           <button onClick={() => setOpen(!open)} className={styles.units}>
             <img src={unitsSvg} alt="units" />
             <span>Units</span>

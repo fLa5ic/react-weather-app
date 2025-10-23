@@ -82,8 +82,11 @@ const Search: React.FC = () => {
               // Показываем историю поисков + популярные города
               <>
                 {searchHistory.map((city) => (
-                  <div key={city} className={styles.dropDownItem}>
-                    <span onClick={() => handleCityClick(city)}>{city}</span>
+                  <div
+                    key={city}
+                    className={styles.dropDownItem}
+                    onClick={() => handleCityClick(city)}>
+                    <span>{city}</span>
                     <button
                       className={styles.removeBtn}
                       onClick={(e) => {

@@ -102,8 +102,10 @@ export const WeatherProvider: React.FC<{ children: React.ReactNode }> = ({ child
         `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&hourly=weather_code,temperature_2m&current=weather_code,temperature_2m,precipitation,relative_humidity_2m,apparent_temperature,wind_speed_10m&timezone=auto`,
       );
       setWeatherData(response.data);
+      return true;
     } catch (error) {
       console.error('Ошибка:', error);
+      return false;
     } finally {
       setLoading(false);
     }
@@ -144,11 +146,12 @@ export const WeatherProvider: React.FC<{ children: React.ReactNode }> = ({ child
   };
 
   // Функция смены города
-  const handleCityChange = (cityName: string) => {
+  const handleCityChange = async (cityName: string) => {
     const selectedCity = cities.find((city) => city.name === cityName);
     if (selectedCity) {
       setCurrentCity(cityName);
-      fetchWeather(selectedCity.lat, selectedCity.lon);
+      await fetchWeather(selectedCity.lat, selectedCity.lon);
+      navigate('/');
     }
   };
 
@@ -182,17 +185,17 @@ export const WeatherProvider: React.FC<{ children: React.ReactNode }> = ({ child
         setCurrentCity(cityNameEn);
         fetchWeather(parseFloat(lat), parseFloat(lon));
 
-        // Сохраняем в историю - ВОТ ЭТОТ ИСПРАВЛЕННЫЙ КОД
         setSearchHistory((prev) => {
           const newHistory = [cityName, ...prev.filter((item) => item !== cityName)].slice(0, 10);
           localStorage.setItem('weatherSearchHistory', JSON.stringify(newHistory));
           return newHistory;
         });
+        navigate('/');
       } else {
-        navigate('/not-found'); // перенаправляем на страницу not-found
+        navigate('/not-found');
       }
     } catch (error) {
-      navigate('/api-error'); // перенаправляем на страницу api-error
+      navigate('/api-error');
     } finally {
       setLoading(false);
     }

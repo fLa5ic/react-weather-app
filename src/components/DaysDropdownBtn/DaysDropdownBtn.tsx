@@ -5,25 +5,35 @@ import dropDownIcon from '../../assets/images/icon-dropdown.svg';
 
 import styles from './DaysDropdownBtn.module.scss';
 
-type DaysDropdownBtnProps = {
-  selectedDay: number;
-  onDayChange: (dayIndex: number) => void;
-};
-
 const DaysDropdownBtn: React.FC = () => {
   const { selectedDayIndex, setSelectedDayIndex } = useWeather();
   const [open, setOpen] = React.useState(false);
-  // const [selectedDay, setSelectedDay] = React.useState(0);
+
+  // Добавить ref
+  const dropdownRef = React.useRef<HTMLDivElement>(null);
 
   const daysList = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
   const onClickDaysListItem = (i: number) => {
-    setSelectedDayIndex(i); // Передаём наружу выбранный день
+    setSelectedDayIndex(i);
     setOpen(false);
   };
 
+  // Добавить useEffect для закрытия при клике вне
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const path = event.composedPath && event.composedPath();
+      if (dropdownRef.current && path && !path.includes(dropdownRef.current)) {
+        setOpen(false);
+      }
+    };
+
+    document.body.addEventListener('click', handleClickOutside);
+    return () => document.body.removeEventListener('click', handleClickOutside);
+  }, []);
+
   return (
-    <div className={styles.daysDropdownBtnWrapper}>
+    <div ref={dropdownRef} className={styles.daysDropdownBtnWrapper}>
       <button onClick={() => setOpen(!open)} className={styles.daysDropdownBtn}>
         {daysList[selectedDayIndex]}
         <img src={dropDownIcon} alt="dropDownIcon" />

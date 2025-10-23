@@ -11,17 +11,6 @@ import stormSvg from '../../assets/images/icon-storm.webp';
 import fogSvg from '../../assets/images/icon-fog.webp';
 import styles from './DailyForecast.module.scss';
 
-type DayilyForecastProps = {
-  dailyData?: {
-    time: string[];
-    temperature_2m_max: number[];
-    temperature_2m_min: number[];
-    weather_code: number[];
-  };
-  getWeatherIcon: (code: number) => string;
-  convertTemp: (temp: number) => number;
-};
-
 const DayilyForecast: React.FC = () => {
   const { weatherData, getWeatherIcon, convertTemp } = useWeather();
 
