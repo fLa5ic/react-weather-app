@@ -9,6 +9,8 @@ import NotFound from './pages/NotFound';
 
 import './scss/app.scss';
 
+// npm install @reduxjs/toolkit react-redux
+
 function App() {
   return (
     <WeatherProvider>
