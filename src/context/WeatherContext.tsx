@@ -1,28 +1,25 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { WeatherData, City, Units } from '../types/weather';
-import { CITIES, DEFAULT_CITY, DEFAULT_CITY_LAT, DEFAULT_CITY_LON } from '../constants';
+import { City } from '../types/weather';
+import { CITIES, DEFAULT_CITY_LAT, DEFAULT_CITY_LON } from '../constants';
+
+import { useSelector } from 'react-redux';
+import { useAppDispatch, RootState } from '../redux/store';
+
+import {
+  setWeatherData,
+  setCurrentCity,
+  setSearchHistory,
+  setLoading,
+  setError,
+} from '../redux/slices/weatherSlice';
 
 type WeatherContextType = {
   // States
-  units: Units;
-  weatherData: WeatherData | null;
-  currentCity: string;
-  searchHistory: string[];
-  selectedDayIndex: number;
-  loading: boolean;
-  error: string | null;
   cities: City[];
 
   // Setters
-  setUnits: (units: Units) => void;
-  setWeatherData: (data: WeatherData | null) => void;
-  setCurrentCity: (city: string) => void;
-  setSearchHistory: (history: string[]) => void;
-  setSelectedDayIndex: (dayIndex: number) => void;
-  setLoading: (loading: boolean) => void;
-  setError: (error: string | null) => void;
 
   // Functions
   handleCityChange: (cityChange: string) => void;
@@ -49,13 +46,9 @@ export const useWeather = () => {
 export const WeatherProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const navigate = useNavigate();
 
-  const [units, setUnits] = React.useState<Units>('metric');
-  const [weatherData, setWeatherData] = React.useState<WeatherData | null>(null);
-  const [currentCity, setCurrentCity] = React.useState(DEFAULT_CITY);
-  const [searchHistory, setSearchHistory] = React.useState<string[]>([]);
-  const [selectedDayIndex, setSelectedDayIndex] = React.useState(0);
-  const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState<string | null>(null);
+  const dispatch = useAppDispatch();
+  const units = useSelector((state: RootState) => state.weather.units);
+  const searchHistory = useSelector((state: RootState) => state.weather.searchHistory);
 
   const convertTemp = (temp: number): number => {
     if (units === 'imperial') {
@@ -79,18 +72,18 @@ export const WeatherProvider: React.FC<{ children: React.ReactNode }> = ({ child
   };
 
   const fetchWeather = async (lat: number, lon: number) => {
-    setLoading(true);
+    dispatch(setLoading(true));
     try {
       const response = await axios.get(
         `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&hourly=weather_code,temperature_2m&current=weather_code,temperature_2m,precipitation,relative_humidity_2m,apparent_temperature,wind_speed_10m&timezone=auto`,
       );
-      setWeatherData(response.data);
+      dispatch(setWeatherData(response.data));
       return true;
     } catch (error) {
       console.error('Ошибка:', error);
       return false;
     } finally {
-      setLoading(false);
+      dispatch(setLoading(false));
     }
   };
 
@@ -132,7 +125,7 @@ export const WeatherProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const handleCityChange = async (cityName: string) => {
     const selectedCity = CITIES.find((city) => city.name === cityName);
     if (selectedCity) {
-      setCurrentCity(cityName);
+      dispatch(setCurrentCity(cityName));
       await fetchWeather(selectedCity.lat, selectedCity.lon);
       navigate('/');
     }
@@ -141,15 +134,15 @@ export const WeatherProvider: React.FC<{ children: React.ReactNode }> = ({ child
   React.useEffect(() => {
     const savedHistory = localStorage.getItem('weatherSearchHistory');
     if (savedHistory) {
-      setSearchHistory(JSON.parse(savedHistory));
+      dispatch(setSearchHistory(JSON.parse(savedHistory)));
     }
     // Загружаем погоду для дефолтного города при первом рендере
     fetchWeather(DEFAULT_CITY_LAT, DEFAULT_CITY_LON);
   }, []);
 
   const searchCity = async (cityName: string) => {
-    setLoading(true);
-    setError(null);
+    dispatch(setLoading(true));
+    dispatch(setError(null));
     try {
       const geoResponse = await axios.get(
         `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
@@ -161,14 +154,15 @@ export const WeatherProvider: React.FC<{ children: React.ReactNode }> = ({ child
         const { lat, lon, display_name } = geoResponse.data[0];
 
         const cityNameEn = display_name.split(',')[0];
-        setCurrentCity(cityNameEn);
+        dispatch(setCurrentCity(cityNameEn));
         await fetchWeather(parseFloat(lat), parseFloat(lon));
 
-        setSearchHistory((prev) => {
-          const newHistory = [cityName, ...prev.filter((item) => item !== cityName)].slice(0, 10);
-          localStorage.setItem('weatherSearchHistory', JSON.stringify(newHistory));
-          return newHistory;
-        });
+        const newHistory = [cityName, ...searchHistory.filter((item) => item !== cityName)].slice(
+          0,
+          10,
+        );
+        localStorage.setItem('weatherSearchHistory', JSON.stringify(newHistory));
+        dispatch(setSearchHistory(newHistory));
         navigate('/');
       } else {
         navigate('/not-found');
@@ -176,33 +170,17 @@ export const WeatherProvider: React.FC<{ children: React.ReactNode }> = ({ child
     } catch (error) {
       navigate('/api-error');
     } finally {
-      setLoading(false);
+      dispatch(setLoading(false));
     }
   };
 
   const removeFromHistory = (cityToRemove: string) => {
-    setSearchHistory((prev) => {
-      const newHistory = prev.filter((city) => city !== cityToRemove);
-      localStorage.setItem('weatherSearchHistory', JSON.stringify(newHistory));
-      return newHistory;
-    });
+    const newHistory = searchHistory.filter((city) => city !== cityToRemove);
+    localStorage.setItem('weatherSearchHistory', JSON.stringify(newHistory));
+    dispatch(setSearchHistory(newHistory));
   };
 
   const value = {
-    units,
-    setUnits,
-    currentCity,
-    setCurrentCity,
-    searchHistory,
-    setSearchHistory,
-    weatherData,
-    setWeatherData,
-    loading,
-    setLoading,
-    error,
-    setError,
-    selectedDayIndex,
-    setSelectedDayIndex,
     handleCityChange,
     searchCity,
     removeFromHistory,

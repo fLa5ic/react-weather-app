@@ -1,5 +1,9 @@
 import React from 'react';
-import { useWeather } from '../../context/WeatherContext';
+import { useSelector } from 'react-redux';
+import { RootState, useAppDispatch } from '../../redux/store';
+
+import { setSelectedDayIndex } from '../../redux/slices/weatherSlice';
+
 import { DAYS_OF_WEEK_FULL } from '../../constants';
 
 import dropDownIcon from '../../assets/images/icon-dropdown.svg';
@@ -7,13 +11,15 @@ import dropDownIcon from '../../assets/images/icon-dropdown.svg';
 import styles from './DaysDropdownBtn.module.scss';
 
 const DaysDropdownBtn: React.FC = () => {
-  const { selectedDayIndex, setSelectedDayIndex } = useWeather();
+  const dispatch = useAppDispatch();
+  const selectedDayIndex = useSelector((state: RootState) => state.weather.selectedDayIndex);
+
   const [open, setOpen] = React.useState(false);
 
   const dropdownRef = React.useRef<HTMLDivElement>(null);
 
   const onClickDaysListItem = (i: number) => {
-    setSelectedDayIndex(i);
+    dispatch(setSelectedDayIndex(i));
     setOpen(false);
   };
 

@@ -1,10 +1,15 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 import { useWeather } from '../../context/WeatherContext';
 import { getWeatherIconSrc } from '../../utils/weatherIcons';
 import styles from './WeatherInfo.module.scss';
 
 const WeatherInfo: React.FC = () => {
-  const { currentCity, weatherData, getWeatherIcon, convertTemp } = useWeather();
+  const { getWeatherIcon, convertTemp } = useWeather();
+
+  const currentCity = useSelector((state:RootState) => state.weather.currentCity);
+  const weatherData = useSelector((state:RootState) => state.weather.weatherData);
 
   // Теперь получаем данные из weatherData, а не из пропсов
   const temp = weatherData?.current?.temperature_2m || 0;

@@ -3,12 +3,14 @@ import { useWeather } from '../../context/WeatherContext';
 
 import searchSvg from '../../assets/images/icon-search.svg';
 import styles from './Search.module.scss';
+import { RootState } from '../../redux/store';
+import { useSelector } from 'react-redux';
 
 const Search: React.FC = () => {
+  const searchHistory = useSelector((state: RootState) => state.weather.searchHistory);
+  const currentCity = useSelector((state: RootState) => state.weather.currentCity);
   const {
     cities, // Добавляем cities в Context
-    currentCity,
-    searchHistory,
     handleCityChange, // Эти функции должны быть в Context
     searchCity,
     removeFromHistory,

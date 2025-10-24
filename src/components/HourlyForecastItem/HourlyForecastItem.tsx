@@ -1,10 +1,16 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+
 import { useWeather } from '../../context/WeatherContext';
 import { getWeatherIconSrc } from '../../utils/weatherIcons';
 import styles from './HourlyForecastItem.module.scss';
 
 const HourlyForecastItem: React.FC = () => {
-  const { weatherData, selectedDayIndex, getWeatherIcon, convertTemp } = useWeather();
+  const weatherData = useSelector((state: RootState) => state.weather.weatherData);
+  const selectedDayIndex = useSelector((state: RootState) => state.weather.selectedDayIndex);
+  
+  const { getWeatherIcon, convertTemp } = useWeather();
 
   const hourlyData = weatherData?.hourly;
 

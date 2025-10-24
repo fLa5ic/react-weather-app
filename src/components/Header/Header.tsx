@@ -1,5 +1,7 @@
 import React from 'react';
-import { useWeather } from '../../context/WeatherContext';
+import { useSelector } from 'react-redux';
+import { useAppDispatch, RootState } from '../../redux/store';
+import { setUnits } from '../../redux/slices/weatherSlice';
 
 import { Link } from 'react-router-dom';
 
@@ -10,18 +12,20 @@ import optionSwitcCheckmark from '../../assets/images/icon-checkmark.svg';
 import styles from './Header.module.scss';
 
 const Header: React.FC = () => {
-  const { units, setUnits } = useWeather();
+  const dispatch = useAppDispatch();
+  const units = useSelector((state: RootState) => state.weather.units);
+
   const [open, setOpen] = React.useState(false);
 
   const unitsRef = React.useRef<HTMLDivElement>(null);
 
   const handleSwitchToImperial = () => {
-    setUnits('imperial');
+    dispatch(setUnits('imperial'));
     setOpen(false);
   };
 
   const handleSwitchToMetric = () => {
-    setUnits('metric');
+    dispatch(setUnits('metric'));
     setOpen(false);
   };
 
@@ -45,7 +49,7 @@ const Header: React.FC = () => {
             <img src={logoSvg} alt="Weather Now" />
           </Link>
         </div>
-        
+
         <div ref={unitsRef} className={styles.unitsWrap}>
           <button onClick={() => setOpen(!open)} className={styles.units}>
             <img src={unitsSvg} alt="units" />
@@ -64,7 +68,7 @@ const Header: React.FC = () => {
                   <div className={styles.title}>Temperature</div>
                   <button
                     className={`${styles.optionBtn} ${units === 'metric' ? styles.active : ''}`}
-                    onClick={() => setUnits('metric')}>
+                    onClick={() => dispatch(setUnits('metric'))}>
                     Celsius (°C)
                     <img
                       className={styles.checkmarkIcon}
@@ -74,7 +78,7 @@ const Header: React.FC = () => {
                   </button>
                   <button
                     className={`${styles.optionBtn} ${units === 'imperial' ? styles.active : ''}`}
-                    onClick={() => setUnits('imperial')}>
+                    onClick={() => dispatch(setUnits('imperial'))}>
                     Fahrenheit (°F)
                     <img
                       className={styles.checkmarkIcon}
@@ -88,7 +92,7 @@ const Header: React.FC = () => {
                   <div className={styles.title}>Wind Speed</div>
                   <button
                     className={`${styles.optionBtn} ${units === 'metric' ? styles.active : ''}`}
-                    onClick={() => setUnits('metric')}>
+                    onClick={() => dispatch(setUnits('metric'))}>
                     km/h
                     <img
                       className={styles.checkmarkIcon}
@@ -98,7 +102,7 @@ const Header: React.FC = () => {
                   </button>
                   <button
                     className={`${styles.optionBtn} ${units === 'imperial' ? styles.active : ''}`}
-                    onClick={() => setUnits('imperial')}>
+                    onClick={() => dispatch(setUnits('imperial'))}>
                     mph
                     <img
                       className={styles.checkmarkIcon}
@@ -112,7 +116,7 @@ const Header: React.FC = () => {
                   <div className={styles.title}>Precipitation</div>
                   <button
                     className={`${styles.optionBtn} ${units === 'metric' ? styles.active : ''}`}
-                    onClick={() => setUnits('metric')}>
+                    onClick={() => dispatch(setUnits('metric'))}>
                     Millimeters (mm)
                     <img
                       className={styles.checkmarkIcon}
@@ -122,7 +126,7 @@ const Header: React.FC = () => {
                   </button>
                   <button
                     className={`${styles.optionBtn} ${units === 'imperial' ? styles.active : ''}`}
-                    onClick={() => setUnits('imperial')}>
+                    onClick={() => dispatch(setUnits('imperial'))}>
                     Inches (in)
                     <img
                       className={styles.checkmarkIcon}

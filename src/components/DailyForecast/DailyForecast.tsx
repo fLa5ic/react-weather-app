@@ -2,10 +2,16 @@ import React from 'react';
 import { useWeather } from '../../context/WeatherContext';
 import { getWeatherIconSrc } from '../../utils/weatherIcons';
 import { DAYS_OF_WEEK_SHORT } from '../../constants';
+
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+
 import styles from './DailyForecast.module.scss';
 
 const DayilyForecast: React.FC = () => {
-  const { weatherData, getWeatherIcon, convertTemp } = useWeather();
+  const weatherData = useSelector((state: RootState) => state.weather.weatherData);
+  
+  const { getWeatherIcon, convertTemp } = useWeather();
 
   const dailyData = weatherData?.daily;
 
