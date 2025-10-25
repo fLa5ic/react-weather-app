@@ -9,8 +9,12 @@
   padding-right: 15px;
   margin: 0 auto;
 
-  // border-right: 1px solid green;
-  // border-left: 1px solid green;
+  @media (min-width: 376px) and (max-width: 768px) {
+    width: 100%;
+    max-width: 768px;
+    padding-left: 2.4rem;
+    padding-right: 2.4rem;
+  }
 }
 
 *,
@@ -45,12 +49,29 @@ body {
   height: 100%;
 
   background: $bgColor;
+
+  @media (max-width: 375px) {
+    min-width: 375px;
+  }
+
+  @media (min-width: 376px) and (max-width: 768px) {
+    min-width: 768px;
+  }
 }
 
 .wrapper {
-
   padding-top: 4.8rem;
   padding-bottom: 8rem;
+
+  @media (max-width: 375px) {
+    padding-top: 1.6rem;
+    padding-bottom: 4.8rem;
+  }
+
+  @media (min-width: 376px) and (max-width: 768px) {
+    padding-top: 2.4rem;
+    padding-bottom: 8rem;
+  }
 }
 
 .mainTitleInApp {
@@ -63,6 +84,18 @@ body {
   color: $main;
 
   margin: 6.4rem 0;
+
+  @media (max-width: 375px) {
+    display: block;
+    margin: 4.8rem auto;
+    width: 33rem;
+  }
+
+  @media (min-width: 376px) and (max-width: 768px) {
+    display: block;
+    margin: 4.8rem auto;
+    width: 48.2rem;
+  }
 }
 
 .content {
@@ -72,14 +105,44 @@ body {
 
   margin-top: 4.8rem;
 
+  @media (max-width: 375px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3.2rem;
+    margin-top: 3.2rem;
+  }
+
+  @media (min-width: 376px) and (max-width: 768px) {
+    flex-direction: column;
+    margin-top: 3.2rem;
+    gap: 3.2rem;
+  }
+
+
   &-left {
     width: 80rem;
-    // border: 1px solid red;
+
+    @media (max-width: 375px) {
+      width: 34.3rem;
+    }
+
+    @media (min-width: 376px) and (max-width: 768px) {
+      width: 72rem
+    }
 
     &__top {
       display: flex;
       flex-direction: column;
       margin-bottom: 4.8rem;
+
+      @media (max-width: 375px) {
+        margin-bottom: 3.2rem;
+      }
+
+      @media (min-width: 376px) and (max-width: 768px) {
+        margin-bottom: 3.2rem;
+      }
     }
 
     &__bottom {
@@ -87,6 +150,25 @@ body {
         display: flex;
         justify-content: space-between;
         flex-direction: wrap;
+
+        @media (max-width: 375px) {
+          width: 34.3rem;
+
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          grid-template-rows: repeat(3, 1fr);
+          grid-column-gap: 1.6rem;
+          grid-row-gap: 1.6rem;
+        }
+
+        @media (min-width: 376px) and (max-width: 768px) {
+          width: 72rem;
+          display: grid;
+          grid-template-columns: repeat(7, 1fr);
+          grid-template-rows: 1fr;
+          grid-column-gap: 1.6rem;
+          grid-row-gap: 1.6rem;
+        }
       }
 
       &-title {
@@ -112,6 +194,14 @@ body {
     background: $bgComponents;
     border-radius: 2rem;
 
+    @media (max-width: 375px) {
+      width: 34.3rem;
+    }
+
+    @media (min-width: 376px) and (max-width: 768px) {
+      width: 72rem;
+    }
+
     &__header {
       display: flex;
       align-items: center;
@@ -131,8 +221,16 @@ body {
     &__items {
       display: flex;
       flex-direction: column;
+
       gap: 1.6rem;
       margin-top: 1.6rem;
+
+      @media (max-width: 375px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
     }
   }
 }

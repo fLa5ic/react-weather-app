@@ -54,4 +54,12 @@
       color: $subMain
     }
   }
+
+  @media (max-width: 375px) {
+    width: 100%;
+  }
+
+  @media (min-width: 376px) and (max-width: 768px) {
+    width: 100%;
+  }
 }

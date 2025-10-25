@@ -11,7 +11,7 @@ A modern, responsive weather application built with React, TypeScript, and SCSS.
 -  **Search History**: Quick access to previously searched cities (stored in localStorage)
 -  **Popular Cities**: Quick selection from pre-configured popular cities
 -  **Unit Conversion**: Toggle between Metric (°C, km/h, mm) and Imperial (°F, mph, in) units
--  **Responsive Design**: Clean, modern UI with smooth interactions
+-  **Responsive Design**: Fully adaptive layout for Mobile (375px), Tablet (768px), and Desktop (1200px+)
 -  **Type-Safe**: Built with TypeScript for enhanced code quality and developer experience
 
 ## 🛠️ Technologies Used
@@ -109,6 +109,16 @@ Components use `useSelector` and `useDispatch` hooks to connect to Redux store. 
 
 Dedicated error pages for API failures and search results not found, with navigation back to the main page. Async thunks handle loading and error states automatically.
 
+### Responsive Design
+
+The application is fully responsive and optimized for different screen sizes:
+
+-  **📱 Mobile (375px)**: Compact single-column layout with stacked components, 3x3 grid for daily forecast
+-  **📱 Tablet (376px - 768px)**: Optimized two-column layout with expanded weather cards, 7x1 grid for daily forecast
+-  **🖥️ Desktop (769px+)**: Full-width layout with side-by-side weather information and forecast panels
+
+All breakpoints use CSS media queries with non-overlapping ranges to ensure consistent rendering across devices.
+
 ## 🌐 APIs Used
 
 -  **Open-Meteo API**: Free weather API providing current conditions, hourly and daily forecasts
@@ -123,7 +133,6 @@ Dedicated error pages for API failures and search results not found, with naviga
 ## 💡 Future Improvements
 
 -  Loading skeletons for better UX during data fetching
--  Responsive design for mobile devices
 -  Weather alerts and notifications
 -  Geolocation support
 -  More detailed weather information
