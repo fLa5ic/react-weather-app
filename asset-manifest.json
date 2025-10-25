@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/react-weather-app/static/css/main.36f55ae9.css",
-    "main.js": "/react-weather-app/static/js/main.d08c3440.js",
+    "main.js": "/react-weather-app/static/js/main.083af02e.js",
     "static/media/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf": "/react-weather-app/static/media/BricolageGrotesque-VariableFont_opsz,wdth,wght.175002216ea0536c7b5d.ttf",
     "static/media/DMSans-Italic-VariableFont_opsz,wght.ttf": "/react-weather-app/static/media/DMSans-Italic-VariableFont_opsz,wght.70561bf1fd655fe216c8.ttf",
     "static/media/DMSans-VariableFont_opsz,wght.ttf": "/react-weather-app/static/media/DMSans-VariableFont_opsz,wght.39867822ec01fc077cb5.ttf",
@@ -22,10 +22,10 @@
     "static/media/icon-dropdown.svg": "/react-weather-app/static/media/icon-dropdown.c8dca8f83d3ae535326e2e96e85b3ba7.svg",
     "static/media/icon-checkmark.svg": "/react-weather-app/static/media/icon-checkmark.6837488ff0a07a4c422c068b6fe7bd8d.svg",
     "main.36f55ae9.css.map": "/react-weather-app/static/css/main.36f55ae9.css.map",
-    "main.d08c3440.js.map": "/react-weather-app/static/js/main.d08c3440.js.map"
+    "main.083af02e.js.map": "/react-weather-app/static/js/main.083af02e.js.map"
   },
   "entrypoints": [
     "static/css/main.36f55ae9.css",
-    "static/js/main.d08c3440.js"
+    "static/js/main.083af02e.js"
   ]
 }
