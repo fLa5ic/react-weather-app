@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/react-weather-app/static/css/main.36f55ae9.css",
+    "main.css": "/react-weather-app/static/css/main.81a248fd.css",
     "main.js": "/react-weather-app/static/js/main.083af02e.js",
     "static/media/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf": "/react-weather-app/static/media/BricolageGrotesque-VariableFont_opsz,wdth,wght.175002216ea0536c7b5d.ttf",
     "static/media/DMSans-Italic-VariableFont_opsz,wght.ttf": "/react-weather-app/static/media/DMSans-Italic-VariableFont_opsz,wght.70561bf1fd655fe216c8.ttf",
@@ -8,6 +8,7 @@
     "static/media/logo.svg": "/react-weather-app/static/media/logo.180877536ebf0b1c44abc6d88d4e9bae.svg",
     "static/media/icon-fog.webp": "/react-weather-app/static/media/icon-fog.cfbc8851a50ab0a52986.webp",
     "static/media/bg-today-large.svg": "/react-weather-app/static/media/bg-today-large.0ea745fe7292037130ab.svg",
+    "static/media/bg-today-small.svg": "/react-weather-app/static/media/bg-today-small.cd99d8d596b67e82e0ca.svg",
     "static/media/icon-sunny.webp": "/react-weather-app/static/media/icon-sunny.7cdcf41677289b5af443.webp",
     "static/media/icon-partly-cloudy.webp": "/react-weather-app/static/media/icon-partly-cloudy.34557834b606885c72e5.webp",
     "static/media/icon-rain.webp": "/react-weather-app/static/media/icon-rain.69df2f59fc4a3614bc71.webp",
@@ -21,11 +22,11 @@
     "static/media/icon-search.svg": "/react-weather-app/static/media/icon-search.5b999ce184e338f3c5400eb82c107192.svg",
     "static/media/icon-dropdown.svg": "/react-weather-app/static/media/icon-dropdown.c8dca8f83d3ae535326e2e96e85b3ba7.svg",
     "static/media/icon-checkmark.svg": "/react-weather-app/static/media/icon-checkmark.6837488ff0a07a4c422c068b6fe7bd8d.svg",
-    "main.36f55ae9.css.map": "/react-weather-app/static/css/main.36f55ae9.css.map",
+    "main.81a248fd.css.map": "/react-weather-app/static/css/main.81a248fd.css.map",
     "main.083af02e.js.map": "/react-weather-app/static/js/main.083af02e.js.map"
   },
   "entrypoints": [
-    "static/css/main.36f55ae9.css",
+    "static/css/main.81a248fd.css",
     "static/js/main.083af02e.js"
   ]
 }
