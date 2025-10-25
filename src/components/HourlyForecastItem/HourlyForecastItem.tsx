@@ -2,15 +2,15 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 
-import { useWeather } from '../../context/WeatherContext';
+import { convertTemp, getWeatherIcon } from '../../utils/weatherHelpers';
+
 import { getWeatherIconSrc } from '../../utils/weatherIcons';
 import styles from './HourlyForecastItem.module.scss';
 
 const HourlyForecastItem: React.FC = () => {
   const weatherData = useSelector((state: RootState) => state.weather.weatherData);
   const selectedDayIndex = useSelector((state: RootState) => state.weather.selectedDayIndex);
-  
-  const { getWeatherIcon, convertTemp } = useWeather();
+  const units = useSelector((state: RootState) => state.weather.units);
 
   const hourlyData = weatherData?.hourly;
 
@@ -31,7 +31,7 @@ const HourlyForecastItem: React.FC = () => {
           hour: 'numeric',
           hour12: true,
         }),
-        temperature: convertTemp(hourlyData.temperature_2m[globalIndex]),
+        temperature: convertTemp(hourlyData.temperature_2m[globalIndex], units),
         weatherCode: hourlyData.weather_code[globalIndex],
       };
     });

@@ -1,9 +1,9 @@
 import React from 'react';
 
+import { convertTemp, convertSpeed, convertPrecipitation } from '../../utils/weatherHelpers';
+
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-
-import { useWeather } from '../../context/WeatherContext';
 
 import styles from './WeatherDetails.module.scss';
 
@@ -11,20 +11,18 @@ const WeatherDetails: React.FC = () => {
   const weatherData = useSelector((state: RootState) => state.weather.weatherData);
   const units = useSelector((state: RootState) => state.weather.units);
 
-  const { convertTemp, convertSpeed, convertPrecipitation } = useWeather();
-
   const humidity = weatherData?.current?.relative_humidity_2m;
   const feelsLike =
     weatherData?.current?.apparent_temperature !== undefined
-      ? convertTemp(weatherData.current.apparent_temperature)
+      ? convertTemp(weatherData.current.apparent_temperature, units)
       : undefined;
   const precipitation =
     weatherData?.current?.precipitation !== undefined
-      ? convertPrecipitation(weatherData.current.precipitation)
+      ? convertPrecipitation(weatherData.current.precipitation, units)
       : undefined;
   const wind =
     weatherData?.current?.wind_speed_10m !== undefined
-      ? convertSpeed(weatherData.current.wind_speed_10m)
+      ? convertSpeed(weatherData.current.wind_speed_10m, units)
       : undefined;
 
   return (

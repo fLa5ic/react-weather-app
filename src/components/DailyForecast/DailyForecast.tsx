@@ -1,5 +1,5 @@
 import React from 'react';
-import { useWeather } from '../../context/WeatherContext';
+import { convertTemp, getWeatherIcon } from '../../utils/weatherHelpers';
 import { getWeatherIconSrc } from '../../utils/weatherIcons';
 import { DAYS_OF_WEEK_SHORT } from '../../constants';
 
@@ -10,8 +10,7 @@ import styles from './DailyForecast.module.scss';
 
 const DayilyForecast: React.FC = () => {
   const weatherData = useSelector((state: RootState) => state.weather.weatherData);
-  
-  const { getWeatherIcon, convertTemp } = useWeather();
+  const units = useSelector((state: RootState) => state.weather.units);
 
   const dailyData = weatherData?.daily;
 
@@ -33,10 +32,10 @@ const DayilyForecast: React.FC = () => {
             <img src={weatherIconSrc} alt="Weather" />
             <div className={styles.temperature}>
               <span className={styles.maxTemp}>
-                {convertTemp(dailyData.temperature_2m_max[index])}°
+                {convertTemp(dailyData.temperature_2m_max[index], units)}°
               </span>
               <span className={styles.minTemp}>
-                {convertTemp(dailyData.temperature_2m_min[index])}°
+                {convertTemp(dailyData.temperature_2m_min[index], units)}°
               </span>
             </div>
           </div>

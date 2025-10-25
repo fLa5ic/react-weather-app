@@ -4,32 +4,34 @@ A modern, responsive weather application built with React, TypeScript, and SCSS.
 
 ## 🌟 Features
 
-- **Real-time Weather Data**: Get current weather conditions including temperature, humidity, wind speed, and precipitation
-- **7-Day Forecast**: View daily weather forecasts with min/max temperatures
-- **Hourly Forecast**: Check hourly weather predictions for the selected day
-- **City Search**: Search for any city worldwide using OpenStreetMap geocoding
-- **Search History**: Quick access to previously searched cities (stored in localStorage)
-- **Popular Cities**: Quick selection from pre-configured popular cities
-- **Unit Conversion**: Toggle between Metric (°C, km/h, mm) and Imperial (°F, mph, in) units
-- **Responsive Design**: Clean, modern UI with smooth interactions
-- **Type-Safe**: Built with TypeScript for enhanced code quality and developer experience
+-  **Real-time Weather Data**: Get current weather conditions including temperature, humidity, wind speed, and precipitation
+-  **7-Day Forecast**: View daily weather forecasts with min/max temperatures
+-  **Hourly Forecast**: Check hourly weather predictions for the selected day
+-  **City Search**: Search for any city worldwide using OpenStreetMap geocoding
+-  **Search History**: Quick access to previously searched cities (stored in localStorage)
+-  **Popular Cities**: Quick selection from pre-configured popular cities
+-  **Unit Conversion**: Toggle between Metric (°C, km/h, mm) and Imperial (°F, mph, in) units
+-  **Responsive Design**: Clean, modern UI with smooth interactions
+-  **Type-Safe**: Built with TypeScript for enhanced code quality and developer experience
 
 ## 🛠️ Technologies Used
 
-- **React 19** - UI library
-- **TypeScript** - Type safety and better developer experience
-- **React Router v6** - Client-side routing
-- **Axios** - HTTP requests
-- **SCSS Modules** - Scoped styling
-- **Open-Meteo API** - Weather data
-- **OpenStreetMap Nominatim API** - Geocoding service
+-  **React 19** - UI library
+-  **TypeScript** - Type safety and better developer experience
+-  **Redux Toolkit** - State management with async thunks
+-  **React Redux** - React bindings for Redux
+-  **React Router v6** - Client-side routing
+-  **Axios** - HTTP requests
+-  **SCSS Modules** - Scoped styling
+-  **Open-Meteo API** - Weather data
+-  **OpenStreetMap Nominatim API** - Geocoding service
 
 ## 📦 Installation
 
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/react-weather-app.git
+git clone https://github.com/fLa5ic/react-weather-app.git
 cd react-weather-app
 ```
 
@@ -49,10 +51,10 @@ npm start
 
 ## 🚀 Available Scripts
 
-- `npm start` - Runs the app in development mode
-- `npm run build` - Builds the app for production
-- `npm test` - Launches the test runner
-- `npm run eject` - Ejects from Create React App (one-way operation)
+-  `npm start` - Runs the app in development mode
+-  `npm run build` - Builds the app for production
+-  `npm test` - Launches the test runner
+-  `npm run eject` - Ejects from Create React App (one-way operation)
 
 ## 📁 Project Structure
 
@@ -70,56 +72,63 @@ src/
 │   ├── WeatherDetails/
 │   └── WeatherInfo/
 ├── constants/        # App constants and configuration
-├── context/          # React Context for state management
+├── redux/            # Redux Toolkit state management
+│   ├── slices/       # Redux slices with reducers and async thunks
+│   └── store.ts      # Redux store configuration
 ├── pages/            # Page components
 │   ├── ApiError.tsx
 │   ├── Home.tsx
 │   └── NotFound.tsx
 ├── scss/             # Global styles and SCSS utilities
 ├── types/            # TypeScript type definitions
-├── utils/            # Utility functions
+├── utils/            # Utility functions (converters, helpers)
 ├── App.tsx           # Main App component
 └── index.tsx         # Entry point
 ```
 
 ## 🎨 Key Features Explained
 
-### Weather Context
+### Redux Toolkit State Management
 
-The app uses React Context API for global state management, making weather data, units, and settings accessible throughout the component tree.
+The app uses Redux Toolkit for centralized state management with the following features:
+
+-  **Centralized Store**: All weather data, units, search history, and UI states in one place
+-  **Async Thunks**: API calls handled with `createAsyncThunk` for weather fetching and city search
+-  **Type-Safe**: Fully typed Redux slices with TypeScript for enhanced developer experience
+-  **Pure Utility Functions**: Conversion functions (temperature, speed, precipitation) as reusable pure functions
 
 ### Type Safety
 
-All API responses and data structures are properly typed with TypeScript interfaces, ensuring type safety and better developer experience.
+All API responses, Redux state, and data structures are properly typed with TypeScript interfaces, ensuring type safety and better developer experience.
 
 ### Modular Components
 
-Components are organized with SCSS modules for scoped styling, making the codebase maintainable and scalable.
+Components use `useSelector` and `useDispatch` hooks to connect to Redux store. Organized with SCSS modules for scoped styling, making the codebase maintainable and scalable.
 
 ### Error Handling
 
-Dedicated error pages for API failures and search results not found, with navigation back to the main page.
+Dedicated error pages for API failures and search results not found, with navigation back to the main page. Async thunks handle loading and error states automatically.
 
 ## 🌐 APIs Used
 
-- **Open-Meteo API**: Free weather API providing current conditions, hourly and daily forecasts
+-  **Open-Meteo API**: Free weather API providing current conditions, hourly and daily forecasts
 
-  - No API key required
-  - Rate limit: Reasonable free tier
+   -  No API key required
+   -  Rate limit: Reasonable free tier
 
-- **OpenStreetMap Nominatim API**: Geocoding service to convert city names to coordinates
-  - No API key required
-  - Please respect usage policy
+-  **OpenStreetMap Nominatim API**: Geocoding service to convert city names to coordinates
+   -  No API key required
+   -  Please respect usage policy
 
 ## 💡 Future Improvements
 
-- Loading skeletons for better UX during data fetching
-- Responsive design for mobile devices
-- Weather alerts and notifications
-- Geolocation support
-- More detailed weather information
-- Charts for temperature/precipitation trends
-- Dark mode support
+-  Loading skeletons for better UX during data fetching
+-  Responsive design for mobile devices
+-  Weather alerts and notifications
+-  Geolocation support
+-  More detailed weather information
+-  Charts for temperature/precipitation trends
+-  Dark mode support
 
 ## 📝 License
 

@@ -1,16 +1,16 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { useWeather } from '../../context/WeatherContext';
+import { convertTemp, getWeatherIcon } from '../../utils/weatherHelpers';
 import { getWeatherIconSrc } from '../../utils/weatherIcons';
 import styles from './WeatherInfo.module.scss';
 
 const WeatherInfo: React.FC = () => {
-  const { getWeatherIcon, convertTemp } = useWeather();
 
   const currentCity = useSelector((state:RootState) => state.weather.currentCity);
   const weatherData = useSelector((state:RootState) => state.weather.weatherData);
-
+  const units = useSelector((state: RootState) => state.weather.units);
+  
   // Теперь получаем данные из weatherData, а не из пропсов
   const temp = weatherData?.current?.temperature_2m || 0;
   const weatherCode = weatherData?.current?.weather_code;
@@ -36,7 +36,7 @@ const WeatherInfo: React.FC = () => {
       </div>
       <div className={styles.temperature}>
         <img src={weatherIconSrc} width={120} alt="Weather" />
-        {convertTemp(temp)}°
+        {convertTemp(temp, units)}°
       </div>
     </div>
   );
